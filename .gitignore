@@ -28,3 +28,4 @@ tendercraft-api/node_modules/
 
 # Claude Code
 .claude/
+.vercel
