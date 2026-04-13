@@ -14,7 +14,7 @@ const ANALYSIS_PROMPT = `You are a luxury yacht design expert. Analyze this yach
   ],
   "materials": ["material1", "material2"],
   "hull_character": "One sentence about hull lines and shape",
-  "tender_prompt": "A detailed 2-3 sentence prompt for generating a matching tender. Start with: A photorealistic render of a luxury yacht tender... Include specific hex colors, materials, hull shape, and style cues."
+  "tender_prompt": "A detailed description of how a matching TENDER (small 3-7 meter shuttle boat, NOT a yacht) should look to match this yacht's design. Describe the hull shape adapted to tender scale, specific colors with hex codes, materials, and design cues. Do NOT describe a yacht — describe a small compact boat that a crew member would use to ferry passengers from this yacht to shore. Focus on: hull color and shape, deck material, accent details, windshield style, and overall design language scaled down to tender proportions."
 }
 Return 3-5 colors. Be specific and detailed.`;
 
