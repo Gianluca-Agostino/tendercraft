@@ -1,7 +1,7 @@
 # TenderCraft API — Progress Log
 
 ## Stato attuale
-Tutti i 12 task completati. Build TypeScript pulita, progetto pronto per uso.
+Tutti i task completati. Deploy live su Railway. Prompt ricalibrato per proporzioni tender realistiche.
 
 ## Task completati
 - [x] Task 1 — Scaffold progetto — `package.json`, `tsconfig.json`, `.env.example`, `.gitignore`
@@ -16,55 +16,24 @@ Tutti i 12 task completati. Build TypeScript pulita, progetto pronto per uso.
 - [x] Task 10 — Controllers — `src/controllers/analyze|generate|edit|renderController.ts`
 - [x] Task 11 — Routes + Express app — `src/routes/*.ts`, `src/index.ts`
 - [x] Task 12 — Build verification + README — `README.md`, `tsc --noEmit` clean
+- [x] Fix media type — analyzeController ora passa sempre `image/png` a Claude (Sharp converte a PNG)
+- [x] Fix CORS — accetta *.vercel.app + localhost:4173/5173
+- [x] Fix prompt proporzioni — riscritto promptBuilder.ts per generare TENDER, non yacht
 
 ## Decisioni prese
 - Express 5: `req.params` values sono `string | string[]` — creata helper `paramStr()` nel renderController
-- Multer 1.x: warning deprecation, ma 2.x ha API diversa — mantenuto per stabilità
-- Rate limiting: token bucket custom (niente dipendenze extra) — 10 req/min per IP
+- Rate limiting: token bucket custom — 10 req/min per IP
 - Storage locale MVP: filesystem con cleanup a intervalli (uploads 1h, renders 24h)
+- CORS dinamico: callback che accetta qualsiasi origine con `vercel.app`
+- Prompt builder: definizione esplicita TENDER con dimensioni reali (3m/4.5m/6.5m), NO flybridge/multiple decks
+- Claude Vision prompt: campo tender_prompt ora chiede descrizione tender-scale, non yacht
+
+## Deploy
+- **Backend**: https://tendercraft-production.up.railway.app (Railway, auto-deploy da main)
+- **Frontend**: https://tendercraft.vercel.app (Vercel, auto-deploy da main)
+- **Repo**: https://github.com/Gianluca-Agostino/tendercraft
 
 ## Problemi noti
-- Replicate output URLs sono temporanei — il renderController li scarica e salva localmente appena completati
-- Rate limit buckets in memoria — si resettano al restart del server (accettabile per MVP)
-
-## Struttura file corrente
-```
-tendercraft-api/
-├── PLAN.md
-├── PROGRESS.md
-├── README.md
-├── package.json
-├── tsconfig.json
-├── .env.example
-├── .gitignore
-├── uploads/                  (gitignored)
-├── renders/                  (gitignored)
-└── src/
-    ├── index.ts
-    ├── config/
-    │   └── env.ts
-    ├── types/
-    │   └── index.ts
-    ├── middleware/
-    │   ├── upload.ts
-    │   ├── errorHandler.ts
-    │   └── rateLimit.ts
-    ├── utils/
-    │   └── storage.ts
-    ├── services/
-    │   ├── claudeVision.ts
-    │   ├── fluxGenerate.ts
-    │   ├── fluxEdit.ts
-    │   ├── imageProcessor.ts
-    │   └── promptBuilder.ts
-    ├── controllers/
-    │   ├── analyzeController.ts
-    │   ├── generateController.ts
-    │   ├── editController.ts
-    │   └── renderController.ts
-    └── routes/
-        ├── analyze.ts
-        ├── generate.ts
-        ├── edit.ts
-        └── render.ts
-```
+- Replicate output URLs sono temporanei — il renderController li scarica e salva localmente
+- Rate limit buckets in memoria — si resettano al restart del server
+- Railway free tier: 30 giorni o $5 di utilizzo
