@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+
+# Backend temp files
+tendercraft-api/uploads/
+tendercraft-api/renders/
+tendercraft-api/dist/
+tendercraft-api/node_modules/
+
+# Claude Code
+.claude/
