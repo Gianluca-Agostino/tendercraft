@@ -1,0 +1,114 @@
+{
+  "S1": {
+    "original": "Small/s1.jpeg",
+    "reference": "processed_templates/reference/S1.jpg",
+    "canny": "processed_templates/canny/S1_canny.png",
+    "width": 1024,
+    "height": 720,
+    "aspect_ratio": "1024:720"
+  },
+  "S2": {
+    "original": "Small/s2.png",
+    "reference": "processed_templates/reference/S2.jpg",
+    "canny": "processed_templates/canny/S2_canny.png",
+    "width": 1024,
+    "height": 528,
+    "aspect_ratio": "1024:528"
+  },
+  "S3": {
+    "original": "Small/s3.webp",
+    "reference": "processed_templates/reference/S3.jpg",
+    "canny": "processed_templates/canny/S3_canny.png",
+    "width": 1024,
+    "height": 584,
+    "aspect_ratio": "1024:584"
+  },
+  "M1": {
+    "original": "Medium/m1.jpg",
+    "reference": "processed_templates/reference/M1.jpg",
+    "canny": "processed_templates/canny/M1_canny.png",
+    "width": 1024,
+    "height": 552,
+    "aspect_ratio": "1024:552"
+  },
+  "M2": {
+    "original": "Medium/m2.jpg",
+    "reference": "processed_templates/reference/M2.jpg",
+    "canny": "processed_templates/canny/M2_canny.png",
+    "width": 1024,
+    "height": 640,
+    "aspect_ratio": "1024:640"
+  },
+  "M3": {
+    "original": "Medium/m3.jpg",
+    "reference": "processed_templates/reference/M3.jpg",
+    "canny": "processed_templates/canny/M3_canny.png",
+    "width": 1024,
+    "height": 624,
+    "aspect_ratio": "1024:624"
+  },
+  "M4": {
+    "original": "Medium/m4.jpg",
+    "reference": "processed_templates/reference/M4.jpg",
+    "canny": "processed_templates/canny/M4_canny.png",
+    "width": 1024,
+    "height": 664,
+    "aspect_ratio": "1024:664"
+  },
+  "M5": {
+    "original": "Medium/m5.jpg",
+    "reference": "processed_templates/reference/M5.jpg",
+    "canny": "processed_templates/canny/M5_canny.png",
+    "width": 1024,
+    "height": 712,
+    "aspect_ratio": "1024:712"
+  },
+  "M6": {
+    "original": "Medium/m6.webp",
+    "reference": "processed_templates/reference/M6.jpg",
+    "canny": "processed_templates/canny/M6_canny.png",
+    "width": 1024,
+    "height": 680,
+    "aspect_ratio": "1024:680"
+  },
+  "L1": {
+    "original": "Large/L1.jpg",
+    "reference": "processed_templates/reference/L1.jpg",
+    "canny": "processed_templates/canny/L1_canny.png",
+    "width": 1024,
+    "height": 672,
+    "aspect_ratio": "1024:672"
+  },
+  "L2": {
+    "original": "Large/L2.jpeg",
+    "reference": "processed_templates/reference/L2.jpg",
+    "canny": "processed_templates/canny/L2_canny.png",
+    "width": 1024,
+    "height": 680,
+    "aspect_ratio": "1024:680"
+  },
+  "L3": {
+    "original": "Large/L3.jpg",
+    "reference": "processed_templates/reference/L3.jpg",
+    "canny": "processed_templates/canny/L3_canny.png",
+    "width": 1024,
+    "height": 488,
+    "aspect_ratio": "1024:488"
+  },
+  "L4": {
+    "original": "Large/L4.jpg",
+    "reference": "processed_templates/reference/L4.jpg",
+    "canny": "processed_templates/canny/L4_canny.png",
+    "width": 1024,
+    "height": 576,
+    "aspect_ratio": "1024:576"
+  },
+  "L5": {
+    "original": "Large/L5.webp",
+    "reference": "processed_templates/reference/L5.jpg",
+    "canny": "processed_templates/canny/L5_canny.png",
+    "width": 1024,
+    "height": 568,
+    "aspect_ratio": "1024:568"
+  }
+}

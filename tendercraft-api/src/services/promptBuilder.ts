@@ -40,16 +40,14 @@ export async function buildFluxPrompt(
 
 Your job: write a SINGLE detailed paragraph prompt for an AI image generator (Flux) that will produce a photorealistic render of a tender that looks like it was designed by the same naval architect as the mother yacht.
 
+IMPORTANT PIPELINE CONTEXT: The tender's SHAPE and PROPORTIONS are already locked by a ControlNet structural reference. Your prompt must focus on applying the correct COLORS, MATERIALS, TEXTURES, FINISHES, and DESIGN DETAILS to the already-defined form. Do NOT over-describe the hull shape or dimensions — describe surfaces, colors, materials, chrome/wood/paint relationships, and design details.
+
 CRITICAL RULES:
 - A tender is a SMALL boat (${sizeDesc}), NOT a yacht
-- It must have NO flybridge, NO multiple decks, NO large superstructure
-- The beam (width) is roughly 40% of the length
-- The freeboard (hull above water) is low, 50-70cm
-- It sits LOW in the water
 - The design language, materials, colors, and proportions must feel like a scaled-down sibling of the mother yacht
-- Be extremely specific about colors (use hex codes), materials, shapes, and design details
+- Be extremely specific about colors (use hex codes), materials, finishes, and design details
 - The prompt must be a single paragraph, no bullet points, no line breaks
-- End with: "3/4 aerial perspective view from slightly above. Floating on dark deep ocean water at night. Dramatic cinematic lighting with warm golden reflections. Dark background. 16:9 landscape. 8K product photography. No text, no watermarks, no people."`;
+- End with: "3/4 aerial perspective view from slightly above. Floating on dark deep ocean water. Dramatic cinematic lighting with warm golden reflections. Dark background. 16:9 landscape. 8K product photography. No text, no watermarks, no people."`;
 
   const userPrompt = `Here is the analysis of the mother yacht:
 

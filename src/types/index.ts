@@ -38,6 +38,7 @@ export interface TenderOptions {
 export interface GenerateRequest {
   analysis: YachtAnalysis;
   options?: Partial<TenderOptions>;
+  yachtImageBase64: string;
 }
 
 export type MaskArea = 'hull' | 'cabin' | 'stern' | 'deck' | 'full';
@@ -57,6 +58,7 @@ export interface RenderResult {
   thumbnail_url?: string;
   analysis?: YachtAnalysis;
   prompt_used?: string;
+  template_used?: string;
   created_at?: string;
   completed_at?: string;
   error?: string;

@@ -9,9 +9,14 @@ function required(key: string): string {
   return value;
 }
 
+function optional(key: string): string | undefined {
+  return process.env[key] || undefined;
+}
+
 export const env = {
   ANTHROPIC_API_KEY: required('ANTHROPIC_API_KEY'),
-  REPLICATE_API_TOKEN: required('REPLICATE_API_TOKEN'),
+  FAL_KEY: required('FAL_KEY'),
+  REPLICATE_API_TOKEN: optional('REPLICATE_API_TOKEN'),
   PORT: parseInt(process.env.PORT || '3001', 10),
   FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:5173',
   NODE_ENV: process.env.NODE_ENV || 'development',

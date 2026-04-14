@@ -15,7 +15,11 @@ export const api = {
     return data.data.analysis;
   },
 
-  async generate(request: GenerateRequest): Promise<{ render_id: string; prompt_used: string }> {
+  /**
+   * Generate tender render via fal.ai — SYNCHRONOUS (no polling).
+   * Returns the completed render directly. Takes 15-30 seconds.
+   */
+  async generate(request: GenerateRequest): Promise<RenderResult> {
     const res = await fetch(`${API_BASE}/api/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -23,7 +27,12 @@ export const api = {
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error || 'Generation failed');
-    return { render_id: data.data.render_id, prompt_used: data.data.prompt_used };
+    const result = data.data as RenderResult;
+    // Resolve relative image_url against API_BASE
+    if (result.image_url && result.image_url.startsWith('/')) {
+      result.image_url = `${API_BASE}${result.image_url}`;
+    }
+    return result;
   },
 
   async getRender(id: string): Promise<RenderResult> {

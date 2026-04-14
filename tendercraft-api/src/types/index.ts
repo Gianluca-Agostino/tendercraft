@@ -24,6 +24,7 @@ export interface GenerateOptions {
 export interface GenerateRequest {
   analysis: YachtAnalysis;
   options?: GenerateOptions;
+  yachtImageBase64: string;
 }
 
 export type MaskArea = 'hull' | 'cabin' | 'stern' | 'deck' | 'full';
@@ -41,9 +42,10 @@ export interface RenderResult {
   status: 'pending' | 'processing' | 'completed' | 'failed';
   image_url?: string;
   thumbnail_url?: string;
-  analysis: YachtAnalysis;
-  prompt_used: string;
-  created_at: string;
+  analysis?: YachtAnalysis;
+  prompt_used?: string;
+  template_used?: string;
+  created_at?: string;
   completed_at?: string;
   error?: string;
 }

@@ -148,22 +148,27 @@ export default function Configurator({ open, onClose }: ConfiguratorProps) {
   }, [state.imageFile]);
 
   const handleGenerate = useCallback(async () => {
-    if (!state.analysis) return;
+    if (!state.analysis || !state.imagePreview) return;
     dispatch({ type: 'SET_STEP', step: 'generating' });
     dispatch({ type: 'SET_ERROR', error: null });
     try {
-      const { render_id, prompt_used } = await api.generate({
+      // fal.ai is synchronous — single await, 15-30s
+      const render = await api.generate({
         analysis: state.analysis,
         options: state.options,
+        yachtImageBase64: state.imagePreview,
       });
-      dispatch({ type: 'SET_PROMPT', prompt: prompt_used });
-      startPolling(render_id, 'generating');
+      if (render.prompt_used) {
+        dispatch({ type: 'SET_PROMPT', prompt: render.prompt_used });
+      }
+      dispatch({ type: 'SET_RENDER', render });
+      dispatch({ type: 'SET_STEP', step: 'result' });
     } catch (err) {
       console.error(err);
       dispatch({ type: 'SET_ERROR', error: 'Generation failed. Please try again.' });
       dispatch({ type: 'SET_STEP', step: 'configure' });
     }
-  }, [state.analysis, state.options, startPolling]);
+  }, [state.analysis, state.options, state.imagePreview]);
 
   const handleEdit = useCallback(async (editRequest: Omit<EditRequest, 'render_id'>) => {
     if (!state.currentRender) return;
