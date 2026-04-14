@@ -83,14 +83,19 @@ export async function generateWithTemplate(
           ],
         },
       ],
-      ip_adapters: [
-        {
-          path: 'XLabs-AI/flux-ip-adapter',
-          ip_adapter_image_url: yachtUrl,
-          scale: 0.35,
-        },
-      ],
-    },
+      // Note: SDK types disagree with the actual API schema. We send the
+      // field names that the server validates against.
+      ...({
+        ip_adapter: [
+          {
+            path: 'XLabs-AI/flux-ip-adapter',
+            image_url: yachtUrl,
+            image_encoder_path: 'openai/clip-vit-large-patch14',
+            scale: 0.35,
+          },
+        ],
+      } as Record<string, unknown>),
+    } as Parameters<typeof fal.subscribe<'fal-ai/flux-general'>>[1]['input'],
     logs: true,
     onQueueUpdate: (update) => {
       if (update.status === 'IN_PROGRESS') {
