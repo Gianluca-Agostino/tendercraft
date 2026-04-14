@@ -1,4 +1,4 @@
-import { fal } from '@fal-ai/client';
+import { fal, ValidationError } from '@fal-ai/client';
 import fs from 'fs';
 import { env } from '../config/env.js';
 
@@ -61,7 +61,9 @@ export async function generateWithTemplate(
   const start = Date.now();
   console.log('[fal.ai] Generating with ControlNet Union + IP-Adapter...');
 
-  const result = await fal.subscribe('fal-ai/flux-general', {
+  let result;
+  try {
+    result = await fal.subscribe('fal-ai/flux-general', {
     input: {
       prompt,
       image_size: { width, height },
@@ -96,7 +98,20 @@ export async function generateWithTemplate(
         if (msgs) console.log(`[fal.ai] Progress: ${msgs}`);
       }
     },
-  });
+    });
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      console.error('[fal.ai] Validation error body:', JSON.stringify(err.body, null, 2));
+      throw new Error(`fal.ai validation: ${JSON.stringify(err.body?.detail || err.message)}`);
+    }
+    // Other API errors
+    const errObj = err as { body?: unknown; message?: string };
+    if (errObj.body) {
+      console.error('[fal.ai] API error body:', JSON.stringify(errObj.body, null, 2));
+      throw new Error(`fal.ai error: ${JSON.stringify(errObj.body)}`);
+    }
+    throw err;
+  }
 
   const duration = Date.now() - start;
   console.log(`[fal.ai] Done in ${duration}ms`);
