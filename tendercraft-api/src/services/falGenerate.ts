@@ -78,7 +78,7 @@ export async function generateWithTemplate(
             {
               control_image_url: cannyUrl,
               control_mode: 'canny',
-              conditioning_scale: 0.75,
+              conditioning_scale: 0.30,
             },
           ],
         },
@@ -91,7 +91,7 @@ export async function generateWithTemplate(
             path: 'XLabs-AI/flux-ip-adapter',
             image_url: yachtUrl,
             image_encoder_path: 'openai/clip-vit-large-patch14',
-            scale: 0.35,
+            scale: 0.50,
           },
         ],
       } as Record<string, unknown>),
