@@ -19,6 +19,7 @@ Tutti i task completati. Deploy live su Railway. Prompt ricalibrato per proporzi
 - [x] Fix media type — analyzeController ora passa sempre `image/png` a Claude (Sharp converte a PNG)
 - [x] Fix CORS — accetta *.vercel.app + localhost:4173/5173
 - [x] Fix prompt proporzioni — riscritto promptBuilder.ts per generare TENDER, non yacht
+- [x] Two-phase prompt — promptBuilder ora chiama Claude come "designer navale" per scrivere prompt creativo da yacht analysis. Claude Vision prompt arricchito per analisi più profonda (hull lines, bow angle, chine, tumblehome, design signatures)
 
 ## Decisioni prese
 - Express 5: `req.params` values sono `string | string[]` — creata helper `paramStr()` nel renderController
@@ -27,6 +28,8 @@ Tutti i task completati. Deploy live su Railway. Prompt ricalibrato per proporzi
 - CORS dinamico: callback che accetta qualsiasi origine con `vercel.app`
 - Prompt builder: definizione esplicita TENDER con dimensioni reali (3m/4.5m/6.5m), NO flybridge/multiple decks
 - Claude Vision prompt: campo tender_prompt ora chiede descrizione tender-scale, non yacht
+- Two-phase prompt: aggiunge ~2-3s e ~$0.003 per generazione, ma la qualità del prompt è nettamente superiore. Claude agisce da designer navale e scrive un brief ottimizzato per Flux invece di concatenazione meccanica
+- buildFluxPrompt ora è async — generateController usa await
 
 ## Deploy
 - **Backend**: https://tendercraft-production.up.railway.app (Railway, auto-deploy da main)

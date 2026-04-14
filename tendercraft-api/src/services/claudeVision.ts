@@ -4,19 +4,19 @@ import type { YachtAnalysis } from '../types/index.js';
 
 const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
 
-const ANALYSIS_PROMPT = `You are a luxury yacht design expert. Analyze this yacht image and respond ONLY with a JSON object (no markdown, no backticks). The JSON must have:
+const ANALYSIS_PROMPT = `You are a luxury yacht design expert and naval architect. Analyze this yacht image with extreme attention to design details. Respond ONLY with a JSON object (no markdown, no backticks).
 {
-  "yacht_name": "Identified model or best guess",
-  "design_style": "2-3 word style label",
-  "style_description": "One sentence describing the design philosophy",
+  "yacht_name": "Identified model or best guess, e.g. 'Azimut Grande 35 Metri'",
+  "design_style": "2-3 word style label, e.g. 'Italian Minimalist', 'British Muscular', 'Scandinavian Clean'",
+  "style_description": "One detailed sentence describing the overall design philosophy — what makes this yacht's design distinctive and recognizable",
   "colors": [
-    {"hex": "#XXXXXX", "name": "Color name", "usage": "Where on the yacht"}
+    {"hex": "#XXXXXX", "name": "Color name", "usage": "Exactly where on the yacht this color appears and how it's used"}
   ],
-  "materials": ["material1", "material2"],
-  "hull_character": "One sentence about hull lines and shape",
-  "tender_prompt": "A detailed description of how a matching TENDER (small 3-7 meter shuttle boat, NOT a yacht) should look to match this yacht's design. Describe the hull shape adapted to tender scale, specific colors with hex codes, materials, and design cues. Do NOT describe a yacht — describe a small compact boat that a crew member would use to ferry passengers from this yacht to shore. Focus on: hull color and shape, deck material, accent details, windshield style, and overall design language scaled down to tender proportions."
+  "materials": ["Be specific: not just 'wood' but 'natural teak with visible grain', not just 'metal' but 'brushed stainless steel fittings'"],
+  "hull_character": "Detailed description of the hull shape, lines, and character — describe the bow angle, the chine type, the stern shape, whether lines are aggressive or flowing, the flare, the tumblehome, any distinctive design signatures of this builder",
+  "tender_prompt": "Describe in detail how the design DNA of this yacht would translate to a small 4-5 meter tender boat. How would the hull lines scale down? What design signatures would carry over? How would the color scheme adapt? What materials would match? Describe it as if briefing a naval architect who needs to design a matching tender."
 }
-Return 3-5 colors. Be specific and detailed.`;
+Return 3-5 colors with SPECIFIC hex codes. Be extremely detailed about design language — a good analysis should let someone recognize the yacht brand just from the description.`;
 
 export async function analyzeYachtImage(
   imageBuffer: Buffer,

@@ -19,7 +19,7 @@ export async function generateController(
       return;
     }
 
-    const prompt = buildFluxPrompt(body.analysis, body.options);
+    const prompt = await buildFluxPrompt(body.analysis, body.options);
     const predictionId = await startGeneration(prompt);
 
     res.json({
