@@ -17,6 +17,23 @@ interface FalImageResult {
 }
 
 /**
+ * Parse a data URI or raw base64 string into a Blob.
+ */
+function base64ToBlob(input: string, defaultType = 'image/jpeg'): Blob {
+  let mime = defaultType;
+  let base64 = input;
+  if (input.startsWith('data:')) {
+    const match = input.match(/^data:([^;]+);base64,(.*)$/);
+    if (match) {
+      mime = match[1];
+      base64 = match[2];
+    }
+  }
+  const buffer = Buffer.from(base64, 'base64');
+  return new Blob([buffer], { type: mime });
+}
+
+/**
  * Generate a tender render using fal.ai flux-general with:
  * - ControlNet Union (Canny from template) → locks shape
  * - IP-Adapter (yacht photo) → transfers style
@@ -27,12 +44,19 @@ export async function generateWithTemplate(
 ): Promise<string> {
   const { prompt, cannyImagePath, yachtImageBase64, width, height } = params;
 
-  const cannyBuffer = fs.readFileSync(cannyImagePath);
-  const cannyDataUri = `data:image/png;base64,${cannyBuffer.toString('base64')}`;
+  // Upload Canny + yacht to fal storage → get URLs (avoids huge request payloads)
+  const uploadStart = Date.now();
+  console.log('[fal.ai] Uploading images to fal storage...');
 
-  const yachtDataUri = yachtImageBase64.startsWith('data:')
-    ? yachtImageBase64
-    : `data:image/jpeg;base64,${yachtImageBase64}`;
+  const cannyBuffer = fs.readFileSync(cannyImagePath);
+  const cannyBlob = new Blob([cannyBuffer], { type: 'image/png' });
+  const yachtBlob = base64ToBlob(yachtImageBase64);
+
+  const [cannyUrl, yachtUrl] = await Promise.all([
+    fal.storage.upload(cannyBlob),
+    fal.storage.upload(yachtBlob),
+  ]);
+  console.log(`[fal.ai] Uploaded in ${Date.now() - uploadStart}ms`);
 
   const start = Date.now();
   console.log('[fal.ai] Generating with ControlNet Union + IP-Adapter...');
@@ -50,7 +74,7 @@ export async function generateWithTemplate(
           path: 'Shakker-Labs/FLUX.1-dev-ControlNet-Union-Pro',
           controls: [
             {
-              control_image_url: cannyDataUri,
+              control_image_url: cannyUrl,
               control_mode: 'canny',
               conditioning_scale: 0.75,
             },
@@ -60,7 +84,7 @@ export async function generateWithTemplate(
       ip_adapters: [
         {
           path: 'XLabs-AI/flux-ip-adapter',
-          ip_adapter_image_url: yachtDataUri,
+          ip_adapter_image_url: yachtUrl,
           scale: 0.35,
         },
       ],
